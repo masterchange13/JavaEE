@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.mao.bean" />
+
+    <bean id="user1" class="com.mao.bean.User">
+        <property name="u_age" value="20" />
+        <property name="u_sex" value="m" />
+        <property name="hobbies">
+                <list>
+                    <value>1</value>
+                    <value>2</value>
+                    <value>3</value>
+                    <value>4</value>
+                </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry>
+                    <key>
+                        <value>1</value>
+                    </key>
+                    <value>巧克力</value>
+                </entry>
+                <entry>
+                    <key>
+                        <value>2</value>
+                    </key>
+                    <value>糖果</value>
+                </entry>
+            </map>
+        </property>
+
+
+<!--        <constructor-arg name="u_age" value="20" />-->
+<!--        <constructor-arg name="u_sex" value="m" />-->
+    </bean>
+
+<!--    配置JDK的动态代理, 此时接口是作为代理的目标对象-->
+    <bean id="userMapper" class="com.mao.mapper.Impl.UserMapperImpl"></bean>
+    <bean id="userMapper2" class="com.mao.mapper.Impl.UserMapperImpl2"></bean>
+
+<!--    自定义的增强也需要注入到容器中-->
+    <bean id="aroundAdvice" class="com.mao.advice.UserAroundAdvice"></bean>
+    <bean id="beforeAdvice" class="com.mao.advice.UserBeforeAdvice"></bean>
+
+<!--    配置切面，进行动态代理-->
+    <bean id="userMapperProxy1" class="org.springframework.aop.framework.ProxyFactoryBean">
+<!--        设置代理目标对象-->
+        <property name="target" ref="userMapper"/>
+<!--        设置代理方式，代理接口-->
+        <property name="proxyInterfaces" value="com.mao.mapper.UserMapper"/>
+<!--        设置增强-->
+        <property name="interceptorNames" value="aroundAdvice"/>
+    </bean>
+
+    <bean id="userMapperImpl2" class="com.mao.mapper.Impl.UserMapperImpl2"></bean>
+
+<!--    <bean id="userMapperProxy2" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">-->
+<!--&lt;!&ndash;        设置切点&ndash;&gt;-->
+<!--        <property name="patterns" value="com.mao.mapper.Impl.UserMapperImpl2.*"/>-->
+<!--&lt;!&ndash;        配置增强&ndash;&gt;-->
+<!--        <property name="advice" value="beforeAdvice"/>-->
+<!--    </bean>-->
+
+
+    <bean id="myPointCutAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+
+    </bean>
+
+<!--    创建切点切面的代理对象-->
+    <bean id="userMapperProxy2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="userMapperImpl2"/>
+<!--        默认是false，JDK代理，true就是CGLIB代理-->
+        <property name="proxyTargetClass" value="true"/>
+<!--        将切点切面交给代理对象-->
+        <property name="interceptorNames" value="myPointCutAdvisor"/>
+    </bean>
+
+
+
+</beans>

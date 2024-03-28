@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userMapperImpl22" class="com.mao.mapper.Impl.UserMapperImpl2"></bean>
+    <bean id="userMapper2" class="com.mao.mapper.Impl.UserMapperImpl2"/>
+
+    <bean id="beforeAdvice2" class="com.mao.advice.UserBeforeAdvice"/>
+
+<!--    根据bean的名称创建代理对象-->
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>*</value>
+            </list>
+        </property>
+    </bean>
+
+<!--    自动代理切点切面-->
+<!--    1：配置-->
+    <bean id="myPointCutAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="patterns" value="com.mao.mapper.Impl."/>
+        <property name="advice" ref="beforeAdvice2"/>
+    </bean>
+
+<!--    区别在于自动代理切点切面和手动-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+    </bean>
+
+<!--    手动代理-->
+<!--    <bean id="userMapperProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+<!--        <property name="target" ref="userMapper2"/>-->
+<!--        <property name="interceptorNames" value="beforeAdvice2"/>-->
+
+
+</beans>
