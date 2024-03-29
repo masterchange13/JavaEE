@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+    <table>
+      <caption>商品详情</caption>
+      <tbody>
+      <tr>
+        <th>ID</th>
+        <td th:text="${product.getP_id()}"></td>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <td th:text="${product.getP_name()}"></td>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <td th:text="${product.getP_price()}"></td>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <td th:text="${product.getP_num()}"></td>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <td th:text="${product.getP_info()}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/products}">返回主页</a>
+</body>
+</html>

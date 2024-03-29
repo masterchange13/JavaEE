@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+    <h1>login</h1>
+
+    <div>
+        <h1 th:text="${msg}"></h1>
+        <h1 th:text="${requestScope}"></h1>
+        <h1 th:text="${session.sessionScope}"></h1>
+        map获取数据：<h3 th:text="${key1}"></h3><h3 th:text="${key2}"></h3><h3 th:text="${key3}"></h3>
+        ModelMap获取整体数据: <h3 th:text="${food}"></h3>
+        ModelMap遍历：
+        <table>
+            <tr th:each="f:${food}">
+                <td th:text="${food.key}"></td>
+                <td th:text="${food.value}"></td>
+            </tr>
+        </table>
+        转发地址前的数据: <h3></h3>
+    </div>
+</body>
+</html>

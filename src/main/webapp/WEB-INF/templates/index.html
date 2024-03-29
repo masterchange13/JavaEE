@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>index</h1>
+    <a href="login/login.html">go to login</a>
+    <a href="/login">通过请求访问登录页面</a>
+    <a th:href="@{/login}">通过请求登录页面</a>
+    <form th:action="{/getParam4}" method="get">
+        id: <input type="text" required name="u_id"><br>
+        name: <input type="text" required name="u_name"><br>
+        phone: <input type="text" required name="u_phone"><br>
+        <input type="submit" value="提交">
+    </form>
+
+</body>
+</html>

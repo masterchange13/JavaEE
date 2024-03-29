@@ -92,7 +92,6 @@ public class Test {
         for (User user: userList){
             System.out.println(user.getU_name());
         }
-
-
     }
+
 }
