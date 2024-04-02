@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <title>login</title>
 </head>
-<body>
-    <h1>login</h1>
 
-    <div>
-        <h1 th:text="${msg}"></h1>
-        <h1 th:text="${requestScope}"></h1>
-        <h1 th:text="${session.sessionScope}"></h1>
-        map获取数据：<h3 th:text="${key1}"></h3><h3 th:text="${key2}"></h3><h3 th:text="${key3}"></h3>
-        ModelMap获取整体数据: <h3 th:text="${food}"></h3>
-        ModelMap遍历：
-        <table>
-            <tr th:each="f:${food}">
-                <td th:text="${food.key}"></td>
-                <td th:text="${food.value}"></td>
-            </tr>
-        </table>
-        转发地址前的数据: <h3></h3>
-    </div>
+<body>
+<h4>登录页面</h4>
+
+<div>
+    model:<h3 th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h3>
+    request:<h3 th:text="${requestScope}"></h3>
+    session:<h3 th:text="${session.sessionScope}"></h3>
+    map获取数据:<h3 th:text="${key1}"></h3><h3 th:text="${key2}"></h3><h3 th:text="${3}"></h3>
+    ModelMap获取整体数据:<h3 th:text="${food}"></h3>
+    ModelMap遍历数据:
+    <table>
+        <tr th:each="f:${food}">
+            <td th:text="${f.key}"></td>
+            <td th:text="${f.value}"></td>
+        </tr>
+    </table>
+    转发地址前的数据:<h3 th:text="${message}"></h3>
+</div>
 </body>
+
 </html>
