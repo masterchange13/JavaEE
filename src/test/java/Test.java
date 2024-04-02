@@ -4,7 +4,7 @@ import com.mao.mapper.Impl.TestMapperImpl;
 import com.mao.mapper.Impl.UserMapperImpl;
 import com.mao.mapper.Impl.UserMapperImpl2;
 import com.mao.mapper.UserMapper;
-import javafx.application.Application;
+// import javafx.application.Application;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

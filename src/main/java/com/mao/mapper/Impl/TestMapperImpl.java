@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class TestMapperImpl {
 
-    @Autowired
+    @Autowired(required = false)
     private JdbcTemplate jdbcTemplate;
 
     public void add() {
