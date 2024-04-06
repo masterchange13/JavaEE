@@ -102,7 +102,6 @@ public class IndexController {
     @RequestMapping("/sendParam3")
     public String sendParam2(ModelMap modelMap){
         HashMap<String, Object> map = new HashMap<String, Object>();
-        map = new HashMap();
         map.put("1", "巧克力1");
         map.put("2", "巧克力2");
         map.put("3", "巧克力3");
@@ -128,6 +127,5 @@ public class IndexController {
         mv.addObject("md1", user);
         return mv;
     }
-
 
 }
