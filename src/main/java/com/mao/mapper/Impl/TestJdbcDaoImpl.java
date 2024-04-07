@@ -23,11 +23,11 @@ import java.util.List;
 @Repository
 public class TestJdbcDaoImpl implements TestJdbcDao {
 
-    @Autowired
+    @Autowired(required = false)
     private JdbcTemplate jdbcTemplate;
 
     public List<User> selectAllUser() {
-        String sql = "selecet * from user";
+        String sql = "select * from user";
         List<User> result = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
         return result;
     }
