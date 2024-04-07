@@ -31,14 +31,14 @@ public class ProductDaoImpl {
         product.setP_num(1000);
 
         Product product1 = new Product();
-        product1.setP_id(1);
-        product1.setP_name("巧克力");
+        product1.setP_id(2);
+        product1.setP_name("朱古力");
         product1.setP_price(new BigDecimal(200));
         product1.setP_info("dilicious");
 
         Product product2 = new Product();
-        product2.setP_id(1);
-        product2.setP_name("巧克力");
+        product2.setP_id(3);
+        product2.setP_name("小馒头");
         product2.setP_price(new BigDecimal(200));
         product2.setP_info("dilicious");
         product2.setP_num(1000);
@@ -75,5 +75,10 @@ public class ProductDaoImpl {
     /*
      * 更新和删除同理
      */
+
+    public static void main(String[] args) {
+        List<Product> productList = new ProductDaoImpl().getProductList();
+        System.out.println(productList);
+    }
 
 }

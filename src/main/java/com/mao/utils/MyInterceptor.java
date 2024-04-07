@@ -26,7 +26,7 @@ public class MyInterceptor implements HandlerInterceptor {
             request.getRequestDispatcher("/login").forward(request, response);
             return false;
         }else {
-            return false;
+            return true;
         }
         // true 代表放行请求地址，false代表中断请求地址
     }

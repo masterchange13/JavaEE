@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 // import javax.jws.WebParam;
 import java.util.List;
+import java.util.jar.JarOutputStream;
 
 @Controller
 public class RestFulController {
@@ -31,6 +32,7 @@ public class RestFulController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String toProductIndedx(Model model){
         List<Product> productList = productDao.getProductList();
+        System.out.println(productList);
         model.addAttribute("productList", productList);
         return "product/product_info";
     }
@@ -38,7 +40,8 @@ public class RestFulController {
     @RequestMapping(value = "/product/{id}")
     public String getProductDetail(@PathVariable("id") String p_id, Model model){
         Product product = productDao.getProductById(p_id);
-        model.addAttribute("productList", product);
+        System.out.println(product);
+        model.addAttribute("product", product);
         return "product/product_detail";
     }
 
