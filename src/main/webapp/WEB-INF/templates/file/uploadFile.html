@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script  type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
 </head>
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!--<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
 <body>
-<form th:action="@{}" method="post" enctype="multipart/form-data">
+<form th:action="@{/uploadPhoto}" method="post" enctype="multipart/form-data">
     <table style="margin: auto;">
         <tr>
             <td th:if="${not #strings.isEmpty(msg)}" colspan="2" align="center">
@@ -27,18 +28,69 @@
         </tr>
         <tr>
             <td>file:</td>
-            <td><input type="file" id="chooseImage" name="photos" multiple="multiple" required></td>
+            <td>
+                <input type="file" id="chooseImage" name="photos" multiple="multiple" required>
+                <span th:id="img-div"></span>
+            </td>
         </tr>
         <input type="hidden" id="fileNameStr" name="fileNameStr">
 
         <tr>
             <td colspan="2" align="center">
-                <input type="submit" value="提交">
+                <input type="submit" id="submit" value="提交">
                 <input type="reset" value="重置">
             </td>
         </tr>
     </table>
-    <img id="preview_photo" src="" width="200px" height="200px" alt="">
+    <img id="preview_photo" src="" width="200px" height="200px">
 </form>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    ctxPath = /*[[@{/}]]*/'';
+</script>
+<script>
+    $('#chooseImage').on('change', function (){
+        var filePath = $(this).val(),
+            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+        if (!fileFormat.match(/.png|.jpg|.jpeg|.gif/)){
+            alert("选择的文件类型不符合要求，请重新选择")
+            return ;
+        }
+        // 获取文件内容
+        var arr = document.getElementById("chooseImage").files
+        for (let i = 0; i < arr.length; ++i){
+            // 将文件信息提交给后台
+            let formData = new FormData();
+            formData.append('photo', arr[i])
+            // 立刻上传文件内容到后端
+            $.ajax({
+                url: "http://localhost:8080/ssm/uploadPhoto",
+                type: "post",
+                data: formData,
+                processData: false, // 取消数据格式化，保留原始文件格式数据
+                contentType: false,
+                success: function (data){
+                    if (data.type === "success"){
+                        let html = "<img id='" + data.filename+"' src='" + ctxPath + data.filePath + data.filename+"' 'width='200px'' 'height=200px'>";
+                        $("#img-div").append(html)
+
+                        // 将文件路径信息赋值给fileNameStr
+                        let path = $("#fileNameStr").val();
+                        if (path === ""){
+                            $("#fileNameStr").val(data.filename);
+                        }else{
+                            $("#fileNameStr").val(path + "," + data.filename);
+                        }
+                    }else{
+                        alert(data.msg)
+                    }
+                },
+                error: function (){
+                    alert("文件上传失败")
+                }
+            })
+        }
+    })
+
+</script>
 </html>

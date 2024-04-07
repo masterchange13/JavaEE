@@ -33,28 +33,31 @@
         <property name="maxUploadSize" value="1024000000"/>
     </bean>
 
+<!--    解析所有的静态信息-->
+    <mvc:annotation-driven/>
+
 <!--    配置拦截器-->
-    <mvc:interceptors>
-<!--        定义全局拦截器，对所有的请求都会进行拦截-->
-<!--        <bean class="com.mao.utils.MyInterceptor"/>-->
+<!--    <mvc:interceptors>-->
+<!--&lt;!&ndash;        定义全局拦截器，对所有的请求都会进行拦截&ndash;&gt;-->
+<!--&lt;!&ndash;        <bean class="com.mao.utils.MyInterceptor"/>&ndash;&gt;-->
 
-<!--        一般情况下定义子拦截器,可以指定拦截的地址和放行的地址-->
-        <mvc:interceptor>
-<!--            指定拦截的路径,/**表示拦截所有的地址-->
-            <mvc:mapping path="/**"/>
-<!--            指定放行的路径-->
-            <mvc:exclude-mapping path="/login"/>
-            <mvc:exclude-mapping path="/interceptor/login"/>
-            <mvc:exclude-mapping path="/interceptor/"/>
-            <mvc:exclude-mapping path="/"/>
-            <bean class="com.mao.utils.MyInterceptor"/>
-        </mvc:interceptor>
+<!--&lt;!&ndash;        一般情况下定义子拦截器,可以指定拦截的地址和放行的地址&ndash;&gt;-->
+<!--        <mvc:interceptor>-->
+<!--&lt;!&ndash;            指定拦截的路径,/**表示拦截所有的地址&ndash;&gt;-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--&lt;!&ndash;            指定放行的路径&ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/login"/>-->
+<!--            <mvc:exclude-mapping path="/interceptor/login"/>-->
+<!--            <mvc:exclude-mapping path="/interceptor/"/>-->
+<!--            <mvc:exclude-mapping path="/"/>-->
+<!--            <bean class="com.mao.utils.MyInterceptor"/>-->
+<!--        </mvc:interceptor>-->
 
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/login"/>
-            <bean class="com.mao.utils.MyInterceptor2"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="/login"/>-->
+<!--            <bean class="com.mao.utils.MyInterceptor2"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 
 </beans>

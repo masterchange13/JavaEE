@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace用来指定绑定接口-->
+<mapper namespace="com.mao.mapper.UserMapper2">
+<!--    id绑定方法名称，并且是唯一值-->
+<!--    是否带有参数和返回值,如果有参数parameterType,指定参数类型可以是int/Integer/实体类对象-->
+    <select id="selectAllUser" parameterType="user">
+        select * from user
+    </select>
+    
+<!--    <update id="">-->
+<!--        -->
+<!--    </update>-->
+<!--    -->
+<!--    <insert id="">-->
+
+<!--    </insert>-->
+
+    <delete id="removeUser" parameterType="int">
+        delete from user where u_id=?
+    </delete>
+</mapper>

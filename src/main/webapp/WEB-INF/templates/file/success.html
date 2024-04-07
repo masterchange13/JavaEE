@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td th:if="${not #strings.isEmpty(msg)}" colspan="2" align="center">
+                <p style="color: red;margin: auto" th:text="${msg}"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>学号:</td>
+            <td th:text="${student.getStuId()}"></td>
+        </tr>
+        <tr>
+            <td>姓名:</td>
+            <td th:text="${student.getStuName()}"></td>
+        </tr>
+        <tr>
+            <td>age:</td>
+            <td th:text="${student.getAge()}"></td>
+        </tr>
+        <tr>
+            <td>file:</td>
+            <td th:each="p:${student.getPath()}">
+                <img th:src="${#servletContext.getContextPath()} + '/upload/' + ${p}" width="200px" height="200px">
+                <a th:href="@{/downloadFile(fileName=${p})}">点击下载</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
