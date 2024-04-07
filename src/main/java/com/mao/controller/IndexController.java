@@ -49,6 +49,21 @@ public class IndexController {
         return "login/login";
     }
 
+    @RequestMapping("/interceptor/login")
+    public String loginUser(HttpServletRequest request){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if ("admin".equals(username) && "123456".equals(password)){
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            session.setAttribute("passwor", password);
+//            重定向到主页
+            return "redirect:/products";
+        }
+        request.setAttribute("msg", "用户名或密码错误");
+        return "login/login";
+    }
+
 //    获取页面请求中的参数，httpServletRequest,引入servlet-api
     @RequestMapping("/getParam1")
     public String getParam1(HttpServletRequest request){

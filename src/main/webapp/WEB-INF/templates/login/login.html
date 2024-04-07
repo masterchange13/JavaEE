@@ -9,6 +9,30 @@
 <h4>登录页面</h4>
 
 <div>
+    <form th:action="@{/interceptor/login}" method="post">
+        <table style="margin: auto">
+            <tr>
+                <td th:if="${not #strings.isEmpty(msg)}" colspan="2" align="center">
+                    <p style="color:red; margin: auto" th:text="${msg}"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username" required></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" name="password" required></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="submit" value="登 录"></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<div>
     model:<h3 th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h3>
     request:<h3 th:text="${requestScope}"></h3>
     session:<h3 th:text="${session.sessionScope}"></h3>
