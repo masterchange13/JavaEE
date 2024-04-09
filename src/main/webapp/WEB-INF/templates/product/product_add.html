@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+</head>
+<body>
+<form action="">
+    <table>
+        <caption>商品详情</caption>
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <td>
+                <input type="text" name="id" th:value="${product.getP_id()}" required>
+            </td>
+        </tr>
+        <tr>
+            <th>name</th>
+            <td>
+                <input type="text" id="name" required>
+            </td>
+        </tr>
+        <tr>
+            <th>price</th>
+            <td>
+                <input type="text" id="price" required>
+            </td>
+        </tr>
+        <tr>
+            <th>number</th>
+            <td>
+                <input type="text" id="number" required>
+            </td>
+        </tr>
+        <tr>
+            <th>info</th>
+            <td>
+                <input type="text" id="info" required>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="提交" onclick="send()">
+    <input type="reset" value="重置">
+    <input type="hidden" name="_method" value="put">
+    <input type="hidden" name="id" th:value="${product.getP_id()}">
+</form>
+<a th:href="@{/products}">返回主页</a>
+</body>
+<script>
+    <!--  定义product数据-->
+    var product = {
+        p_id: "",
+        p_name: "",
+        p_price: "",
+        p_num: "",
+        p_info: ""
+    }
+
+    var send = function () {
+        product.p_id = document.getElementById("id").value;
+        product.p_name = document.getElementById("name").value;
+        product.p_price = document.getElementById("price").value;
+        product.p_num = document.getElementById("number").value;
+        product.p_info = document.getElementById("info").value;
+        console.log(product);
+        // 将数据封装成json
+        var formData = JSON.stringify(product);
+        $.ajax({
+            url: "http://localhost:8080/addProduct",
+            type: "post",
+            data: formData,
+            processData: false, // 取消数据格式化，保留原始文件格式数据
+            contentType: false,
+            success: function (data) {
+                alert("添加成功")
+            },
+            error: function (data) {
+                alert("添加失败")
+            },
+        })
+    }
+</script>
+</html>

@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <div>
-      <table>
+<div>
+    <table>
         <thead>
         <th>ID</th>
         <th>商品名</th>
@@ -16,32 +16,33 @@
         </thead>
         <tbody>
         <tr th:each="p:${productList}">
-          <td th:text="${p.getP_id()}"></td>
-          <td th:text="${p.getP_name()}"></td>
-          <td th:text="${p.getP_price()}"></td>
-          <td th:text="${p.getP_num()}"></td>
-          <td>
-            <a th:href="@{|/product/${p.getP_id()}|}">查看详情</a>
-<!--            <a th:href="@{}">修改</a>-->
-<!--            <a th:href="#" th:onclick="deleteProduct([[${p.getP_id()}]])">删除</a>-->
-          </td>
+            <td th:text="${p.getP_id()}"></td>
+            <td th:text="${p.getP_name()}"></td>
+            <td th:text="${p.getP_price()}"></td>
+            <td th:text="${p.getP_num()}"></td>
+            <td>
+                <a th:href="@{|/product/${p.getP_id()}|}">查看详情</a>
+                <!--            <a th:href="@{}">修改</a>-->
+                <!--            <a th:href="#" th:onclick="deleteProduct([[${p.getP_id()}]])">删除</a>-->
+                <a th:href="@{/toAddProduct}">添加商品</a>
+            </td>
         </tr>
         </tbody>
-      </table>
-    </div>
-    <form th:id="delete_form" th:action="@{/product}" method="post">
-      <input type="hidden" name="_method" value="delete">
-      <input type="hidden" name="productId" th:id="form-id">
-    </form>
+    </table>
+</div>
+<form th:id="delete_form" th:action="@{/product}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="hidden" name="productId" th:id="form-id">
+</form>
 </body>
 <script>
-  function deleteProduct(productId){
-    let choice = confirm("是否确认删除")
-    if (choice){
-      var delete_form = document.getElementById("delete_form");
-      document.getElementById("form-id").value = productId
-      delete_form.submit();
+    function deleteProduct(productId) {
+        let choice = confirm("是否确认删除")
+        if (choice) {
+            var delete_form = document.getElementById("delete_form");
+            document.getElementById("form-id").value = productId
+            delete_form.submit();
+        }
     }
-  }
 </script>
 </html>

@@ -81,4 +81,8 @@ public class ProductDaoImpl {
         System.out.println(productList);
     }
 
+    public void addProduct(Product product) {
+        products.put(String.valueOf(product.getP_id()), product);
+        return;
+    }
 }

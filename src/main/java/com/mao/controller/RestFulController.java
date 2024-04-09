@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -50,6 +51,17 @@ public class RestFulController {
         productDao.deleteProductById(productId);
 //        model.addAttribute("product", product);
         return "redirects:/products";
+    }
+
+
+    @RequestMapping("toAddProduct")
+    public String toAddProduct(){
+        return "product/product_add";
+    }
+
+    @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+    public void addProduct (@RequestBody Product product){
+        productDao.addProduct(product);
     }
 
 }
