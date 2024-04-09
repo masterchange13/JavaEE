@@ -62,4 +62,8 @@ public class TestMybatis {
 //   如果是进行修改，删除，添加，最后一定要提交事务
 //    sqlSession.commit();
 //    sqlSession.
+
+    @Test
+    public void test3(){}
+
 }

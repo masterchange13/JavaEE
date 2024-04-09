@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
 </head>
 <body>
 <div>
@@ -24,11 +25,13 @@
                 <a th:href="@{|/product/${p.getP_id()}|}">查看详情</a>
                 <!--            <a th:href="@{}">修改</a>-->
                 <!--            <a th:href="#" th:onclick="deleteProduct([[${p.getP_id()}]])">删除</a>-->
-                <a th:href="@{/toAddProduct}">添加商品</a>
+<!--                <a href="" th:onclick="deleteProduct(${p.getP_id()})">删除商品</a>-->
+                <a href="#" th:onclick="|javascript:deleteProduct('${p.getP_id()}')|">删除商品</a>
             </td>
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/toAddProduct}">添加商品</a>
 </div>
 <form th:id="delete_form" th:action="@{/product}" method="post">
     <input type="hidden" name="_method" value="delete">
@@ -39,9 +42,26 @@
     function deleteProduct(productId) {
         let choice = confirm("是否确认删除")
         if (choice) {
-            var delete_form = document.getElementById("delete_form");
-            document.getElementById("form-id").value = productId
-            delete_form.submit();
+            // var delete_form = document.getElementById("delete_form");
+            // document.getElementById("form-id").value = productId
+            // delete_form.submit();
+            $.ajax({
+                url: "http://localhost:8080/ssm/deleteProduct/" + productId,
+                type: "post",
+                data: productId,
+                processData: false, // 取消数据格式化，保留原始文件格式数据
+                contentType: false,
+                success: function () {
+                    console.log("删除成功");
+                    location.reload()
+                    alert("删除成功")
+                },
+                error: function () {
+                    console.log(xhr.status); // 查看HTTP状态码
+                    console.log(xhr.responseText); // 查看响应体内容
+                    alert("删除失败：" + textStatus + " " + errorThrown.message);
+                },
+            })
         }
     }
 </script>

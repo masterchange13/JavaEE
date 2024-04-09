@@ -20,6 +20,6 @@
 <!--    </insert>-->
 
     <delete id="removeUser" parameterType="int">
-        delete from user where u_id=?
+        delete from user where u_id=#{id}
     </delete>
 </mapper>

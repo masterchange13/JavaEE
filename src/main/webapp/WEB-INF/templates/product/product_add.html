@@ -13,7 +13,7 @@
         <tr>
             <th>ID</th>
             <td>
-                <input type="text" name="id" th:value="${product.getP_id()}" required>
+                <input type="text" name="id" id="id" required>
             </td>
         </tr>
         <tr>
@@ -44,8 +44,8 @@
     </table>
     <input type="submit" value="提交" onclick="send()">
     <input type="reset" value="重置">
-    <input type="hidden" name="_method" value="put">
-    <input type="hidden" name="id" th:value="${product.getP_id()}">
+<!--    <input type="hidden" name="_method" value="put">-->
+<!--    <input type="hidden" name="id" th:value="${product.getP_id()}">-->
 </form>
 <a th:href="@{/products}">返回主页</a>
 </body>
@@ -69,16 +69,19 @@
         // 将数据封装成json
         var formData = JSON.stringify(product);
         $.ajax({
-            url: "http://localhost:8080/addProduct",
+            url: "http://localhost:8080/ssm/addProduct",
             type: "post",
             data: formData,
             processData: false, // 取消数据格式化，保留原始文件格式数据
-            contentType: false,
-            success: function (data) {
+            contentType: 'application/json',
+            success: function () {
+                console.log("添加成功");
                 alert("添加成功")
             },
-            error: function (data) {
-                alert("添加失败")
+            error: function () {
+                console.log(xhr.status); // 查看HTTP状态码
+                console.log(xhr.responseText); // 查看响应体内容
+                alert("添加失败：" + textStatus + " " + errorThrown.message);
             },
         })
     }

@@ -46,12 +46,12 @@ public class RestFulController {
         return "product/product_detail";
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
-    public String deleteProduct(String productId, Model model){
-        productDao.deleteProductById(productId);
-//        model.addAttribute("product", product);
-        return "redirects:/products";
-    }
+//    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
+//    public String deleteProduct(String productId, Model model){
+//        productDao.deleteProductById(productId);
+////        model.addAttribute("product", product);
+//        return "redirects:/products";
+//    }
 
 
     @RequestMapping("toAddProduct")
@@ -61,7 +61,25 @@ public class RestFulController {
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
     public void addProduct (@RequestBody Product product){
+        System.out.println("begin add product");
+        System.out.println(product);
         productDao.addProduct(product);
+        System.out.println("end");
+//        返回200正确码
     }
 
+    @RequestMapping("toAddProductTest")
+    public String toAddProductTest(){
+        return "product/product_add_test";
+    }
+
+    @RequestMapping(value = "deleteProduct/{id}", method = RequestMethod.POST)
+    public String deleteProduct(@PathVariable("id") String id, Model model){
+        System.out.println(id);
+        productDao.deleteProductById(id);
+        List<Product> productList = productDao.getProductList();
+        System.out.println(productList);
+        model.addAttribute("productList", productList);
+        return "product/product_info";
+    }
 }
