@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+</head>
+<body>
+<form action="">
+    <table>
+        <thead>
+        <th>ID</th>
+        <th>商品名</th>
+        <th>商品价格</th>
+        <th>商品库存</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="p:${product}">
+            <td><input type="text" id="id" th:value="${p.getP_id()}"></td>
+            <td><input type="text" id="name" th:value="${p.getP_name()}"></td>
+            <td><input type="text" id="price" th:value="${p.getP_price()}"></td>
+            <td><input type="text" id="number" th:value="${p.getP_num()}"></td>
+            <td><input type="text" id="info" th:value="${p.getP_info()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="提交" onclick="send()">
+    <input type="reset" value="重置">
+<!--    <input type="hidden" name="_method" value="put">-->
+<!--    <input type="hidden" name="id" th:value="${product.getP_id()}">-->
+</form>
+<a th:href="@{/products}">返回主页</a>
+</body>
+<script>
+    <!--  定义product数据-->
+    var product = {
+        p_id: "",
+        p_name: "",
+        p_price: "",
+        p_num: "",
+        p_info: ""
+    }
+
+    var send = function () {
+        product.p_id = document.getElementById("id").value;
+        product.p_name = document.getElementById("name").value;
+        product.p_price = document.getElementById("price").value;
+        product.p_num = document.getElementById("number").value;
+        product.p_info = document.getElementById("info").value;
+        console.log(product);
+        // 将数据封装成json
+        var formData = JSON.stringify(product);
+        $.ajax({
+            url: "http://localhost:8080/ssm/updateProduct",
+            type: "post",
+            data: formData,
+            processData: false, // 取消数据格式化，保留原始文件格式数据
+            contentType: 'application/json',
+            success: function () {
+                console.log("添加成功");
+                alert("添加成功")
+            },
+            error: function () {
+                console.log(xhr.status); // 查看HTTP状态码
+                console.log(xhr.responseText); // 查看响应体内容
+                alert("添加失败：" + textStatus + " " + errorThrown.message);
+            },
+        })
+    }
+</script>
+</html>

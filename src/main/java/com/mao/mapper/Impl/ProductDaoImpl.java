@@ -86,4 +86,10 @@ public class ProductDaoImpl {
         System.out.println(products);
         return;
     }
+
+    public void updateProduct(Product product) {
+        int id = product.getP_id();
+        products.remove(String.valueOf(id));
+        products.put(String.valueOf(product.getP_id()), product);
+    }
 }

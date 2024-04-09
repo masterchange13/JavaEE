@@ -82,4 +82,19 @@ public class RestFulController {
         model.addAttribute("productList", productList);
         return "product/product_info";
     }
+
+    @RequestMapping(value = "toUpdateProduct/{id}")
+    public String toUpdateProduct(@PathVariable("id") String id, Model model){
+        Product product = productDao.getProductById(id);
+        model.addAttribute("product", product);
+        return "product/product_update";
+    }
+
+    @RequestMapping(value = "updateProduct", method = RequestMethod.POST)
+    public String updateProduct(@RequestBody Product product) {
+        // 把product的数据替换products
+        productDao.updateProduct(product);
+        return "redirect:/products";
+    }
+
 }

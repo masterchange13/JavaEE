@@ -27,6 +27,7 @@
                 <!--            <a th:href="#" th:onclick="deleteProduct([[${p.getP_id()}]])">删除</a>-->
 <!--                <a href="" th:onclick="deleteProduct(${p.getP_id()})">删除商品</a>-->
                 <a href="#" th:onclick="|javascript:deleteProduct('${p.getP_id()}')|">删除商品</a>
+                <a th:href="@{|/toUpdateProduct/${p.getP_id()}|}">修改商品</a>
             </td>
         </tr>
         </tbody>
