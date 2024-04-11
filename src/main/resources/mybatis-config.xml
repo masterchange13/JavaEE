@@ -7,7 +7,7 @@
 <!--    引用外部文件-->
 <!--    配置缓存的，是否开启二级缓存-->
 <!--    <settings>-->
-<!--        <setting name="" value=""/>-->
+<!--        <setting name="cacheEnable" value="true"/>-->
 <!--    </settings>-->
 <!--    设置类的别名，一般引用类写全限定类名com.mao.bean.User  别名User-->
 
@@ -32,9 +32,9 @@
 
 <!--    映射-->
     <mappers>
-        <mapper resource="com/mao/mapper/UserMapper2.xml"></mapper>
-
+        <mapper resource="com/mao/mapper/UserMapper2.xml"/>
 <!--        <mapper class="com.mao.mapper.UserMapper2"/>-->
+        <mapper class="com.mao.mapper.SkillMapper"/>
 
 <!--        <package name="com.mao.mapper"/>-->
     </mappers>

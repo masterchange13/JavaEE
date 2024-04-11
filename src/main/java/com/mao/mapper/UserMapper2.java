@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserMapper2 {
@@ -27,4 +28,21 @@ public interface UserMapper2 {
      * 1 直接传参，使用@Param注解
       */
     int removeUser(@Param("id") int id);
+
+    List<User> selectUserByUserInfo(User user);
+
+    int insertIntoUser(User user);
+
+    List<User> selectUserByUserInfo2(User user);
+
+     int updateUser(User user);
+
+    List<User> selectUserByUserInfo6(User user);
+
+    // id的数组
+    List<User> selectUserByIds(@Param("ids") List<Integer> ids);
+
+    int insertIntoUser2(@Param("users") ArrayList<User> ids);
+
+    List<User> selectUserSkill(@Param("u_id") int uid);
 }

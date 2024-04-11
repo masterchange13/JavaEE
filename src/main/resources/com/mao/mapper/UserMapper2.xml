@@ -22,4 +22,161 @@
     <delete id="removeUser" parameterType="int">
         delete from user where u_id=#{id}
     </delete>
+    
+    <insert id="insertIntoUser" parameterType="user">
+        insert into user(u_name, u_age, u_sex, u_phone, u_birth) values(#{u_name}, #{u_age}, #{u_sex}, #{u_phone}, #{u_birth})
+    </insert>
+
+<!--    动态sql,进行sql语句的拼接以及一些处理
+        if / choose(when, otherwise) / trim, where / foreach 列举内容 / bind拼接参数
+        set 去除追加条件的标点符号
+        sql 独立出公共的sql语句，可以自定义sql语句进行引用-->
+
+    <update id="updateUser" parameterType="user">
+        update user
+        <set>
+            <if test="u_name != null and u_name != ''">
+                u_name = #{u_name},
+            </if>
+            <if test="u_sex != null and u_sex != ''">
+                u_sex = #{u_sex},
+            </if>
+            <if test="u_age != null and u_age != ''">
+                u_age = #{u_age}
+            </if>
+        </set>
+
+    </update>
+
+    <select id="selectUserByUserInfo" parameterType="user" resultType="user">
+#         select * from user
+        <bind name="u_name" value="'%' + u_name + '%'"/>
+        <include refid="sql1"/>
+        where 1=1
+            <if test="u_name != null and u_name != ''">
+                u_name like concat('%', #{u_name}, '%')
+            </if>
+            <if test=" u_sex!= null and u_sex != ''">
+                and u_sex = #{u_sex}
+            </if>
+    </select>
+
+    <select id="selectUserByUserInfo2" parameterType="user" resultType="user">
+        <include refid="sql1"/>
+        where 1=1
+        <if test="u_name != null and u_name != ''">
+            and u_name like concat('%', #{u_name}, '%')
+        </if>
+        <if test=" u_sex!= null and u_sex != ''">
+            and u_sex = #{u_sex}
+        </if>
+
+        <choose>
+            <when test="U_name != null and u_name != ''">
+                and u_name like concat('%', #{u_name}, '%')
+            </when>
+            <when test=" u_sex!= null and u_sex != ''">
+                and u_sex = #{u_sex}
+            </when>
+            <otherwise>
+                and u_age > #{u_age}
+            </otherwise>
+        </choose>
+    </select>
+
+<!--    trim-->
+    <select id="selectUserByUserInfo3" resultType="user">
+        select * from user
+        <trim prefix="where" prefixOverrides="and">
+            # 添加需要的关键字，去除多余的关键字， 标点符号
+            <if test="u_name != null and u_name != ''">
+                and u_name like concat('%', #{u_name}, '%')
+            </if>
+            <if test=" u_sex!= null and u_sex != ''">
+                and u_sex = #{u_sex}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectUserByUserInfo6" parameterType="user" resultType="user">
+        #         select * from user
+        <bind name="u_name" value="'%' + u_name + '%'"/>
+        <include refid="sql1"/>
+        where
+        <!--            <if test="u_name != null and u_name != ''">-->
+        u_name like concat('%', #{u_name}, '%')
+        <!--            </if>-->
+        <!--            <if test=" u_sex!= null and u_sex != ''">-->
+        and u_sex = #{u_sex}
+        <!--            </if>-->
+    </select>
+
+    <sql id="sql1">
+        select * from user
+    </sql>
+
+    <select id="selectUserByIds" resultType="user">
+        select * from user where u_id in 
+            <foreach collection="ids" item="u_id" open="（" close=")" separator=",">
+                #{u_id}
+            </foreach> # 还原id数组
+    </select>
+
+    <insert id="insertUser2" >
+        insert into user(u_name, u_age, u_sex, u_birth) values
+            <foreach collection="users" item="user" separator=",">
+                (#{user.u_name}, #{user.u_age}, #{user.u_sex}, #{user.u_birth})
+            </foreach>
+    </insert>
+
+<!--    ResultMap 自定义映射关系，实体类的属性名和数据库的字段名相对应-->
+<!--    id是指resultMap的引用值，type是对应的实体类对象-->
+<!--    <resultMap id="myResult" type="com.mao.bean.User">-->
+<!--&lt;!&ndash;        id一般对应主键&ndash;&gt;-->
+<!--        <id property="u_id" column="u_id" jdbcType=""/>-->
+<!--&lt;!&ndash;        result对应其他属性&ndash;&gt;-->
+<!--        <result property="u_age" column="u_age"/>-->
+<!--        <result property="u_name" column="u_name"/>-->
+<!--    </resultMap>-->
+
+<!--    如果存在实体类嵌套调用，需要在内部进行附加声明，声明的时候，注意数据实体类之间的对应关系
+        1 1对1 不需要中间表，需要自定义映射关系
+        2 1对多 第一种使用中间表进行关联，第二种修改字段类型以及字符串的形式去填写多个信息
+        3 多对多
+-->
+    <resultMap id="us1" type="com.mao.bean.User">
+        <id property="u_id" column="u_id"/>
+        <result property="u_name" column="u_name"/>
+        <result property="u_age" column="u_age"/>
+        <result property="u_sex" column="u_sex"/>
+        <association property="skill" column="s_id" javaType="com.mao.bean.Skill">
+            <id column="s_id" property="s_id"/>
+            <result column="s_name" property="s_name"/>
+            <result column="s_info" property="s_info"/>
+        </association>
+    </resultMap>
+
+    <select id="selectUserSkill" resultMap="us1">
+        select * from user as u, skill as s where u.u_id=s.s_id and u_id=#{u_id}
+    </select>
+
+    <resultMap id="us1n" type="com.mao.bean.User">
+<!--        user是作为1的主体-->
+        <id property="u_id" column="u_id"/>
+        <result property="u_name" column="u_name"/>
+        <result property="u_age" column="u_age"/>
+        <result property="u_sex" column="u_sex"/>
+<!--        一对多的关系-->
+<!--        如果在映射关系中，没有对应上数据库的字段，就可以不写，匹配的类型一定要写-->
+<!--        <collection property="usInfo" ofType="com.mao.bean.UsInfo">-->
+<!--            <id property="us_id" column="us_id"/>-->
+<!--            <result property="u_id" column="u_id"/>-->
+<!--            <result property="s_id" column="s_id"/>-->
+<!--        </collection>-->
+    </resultMap>
+    
+    <select id="selectUserSkill2" resultMap="us1n">
+        select * from user as u, skill as s where u.u_id=s.s_id and u_id=#{u_id}
+    </select>
+    
 </mapper>

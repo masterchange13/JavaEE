@@ -32,4 +32,6 @@ public class User {
     private BigDecimal u_money;
     private List<String> hobbies;
     private Map<String, String> map;
+//    private UsInfo usInfo; // 多表关联的中间处理表, 因为该元素是代表多个属性值，所以引用该对象的时候，要创建为集合
+//    private Skill skill;
 }

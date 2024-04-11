@@ -1,5 +1,7 @@
 import com.fasterxml.jackson.databind.ser.impl.UnknownSerializer;
+import com.mao.bean.Skill;
 import com.mao.bean.User;
+import com.mao.mapper.SkillMapper;
 import com.mao.mapper.UserMapper2;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,5 +68,150 @@ public class TestMybatis {
 
     @Test
     public void test3(){}
+
+    @Test
+    public void test5(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        User user = new User();
+        user.setU_name("飞猪");
+        user.setU_age(20);
+        user.setU_sex("m");
+        user.setU_phone("1234567890");
+        user.setU_birth("2024-04-07");
+        int res = mapper.insertIntoUser(user);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test6(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        User user = new User();
+        user.setU_name("飞猪");
+        user.setU_age(20);
+        user.setU_sex("m");
+        user.setU_phone("1234567890");
+        user.setU_birth("2024-04-07");
+        List<User> users = mapper.selectUserByUserInfo(user);
+        for (User u : users){
+            System.out.println(u);
+        }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test7(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        User user = new User();
+        user.setU_name("飞猪");
+        user.setU_age(20);
+        user.setU_sex("m");
+        user.setU_phone("1234567890");
+        user.setU_birth("2024-04-07");
+        List<User> users = mapper.selectUserByUserInfo2(user);
+        for (User u : users){
+            System.out.println(u);
+        }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test8(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        User user = new User();
+        user.setU_id(1);
+        user.setU_name("小猪猪");
+        user.setU_age(20);
+        user.setU_sex("m");
+        user.setU_phone("1234567890");
+        user.setU_birth("2024-04-07");
+        int i = mapper.updateUser(user);
+        System.out.println(i);
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test9(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        User user = new User();
+        user.setU_name("飞猪");
+        user.setU_age(20);
+        user.setU_sex("m");
+        user.setU_phone("1234567890");
+        user.setU_birth("2024-04-07");
+        List<User> users = mapper.selectUserByUserInfo6(user);
+        for (User u : users){
+            System.out.println(u);
+        }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test10(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+        List<User> users = mapper.selectUserByIds(ids);
+        for (User u : users){
+            System.out.println(u);
+        }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test11(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+        ArrayList<User> users = new ArrayList<User>();
+        for (int i = 0; i < 3; ++i){
+            User user = new User();
+            user.setU_name("测试" + i);
+            user.setU_age(20);
+            user.setU_sex("m");
+            user.setU_phone("1234567890");
+            user.setU_birth("2024-04-07");
+            users.add(user);
+        }
+        Integer result = mapper.insertIntoUser2(users);
+        System.out.println(result);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test12(){
+        UserMapper2 mapper = sqlSession.getMapper(UserMapper2.class);
+
+        List<User> users = mapper.selectUserSkill(1);
+        for (User u: users){
+            System.out.println(u);
+        }
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test14(){
+        SkillMapper mapper = sqlSession.getMapper(SkillMapper.class);
+
+        List<Skill> users = mapper.selectAllSkill(1);
+        for (Skill u: users){
+            System.out.println(u);
+        }
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+
 
 }
