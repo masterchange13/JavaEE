@@ -42,7 +42,9 @@ public interface UserMapper2 {
     // id的数组
     List<User> selectUserByIds(@Param("ids") List<Integer> ids);
 
-    int insertIntoUser2(@Param("users") ArrayList<User> ids);
+    // int insertIntoUser2(@Param("users") ArrayList<User> users);
 
     List<User> selectUserSkill(@Param("u_id") int uid);
+
+    int insertUser2(@Param("users") ArrayList<User> users);
 }

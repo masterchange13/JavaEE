@@ -179,7 +179,7 @@ public class TestMybatis {
             user.setU_birth("2024-04-07");
             users.add(user);
         }
-        Integer result = mapper.insertIntoUser2(users);
+        Integer result = mapper.insertUser2(users);
         System.out.println(result);
 
         sqlSession.commit();

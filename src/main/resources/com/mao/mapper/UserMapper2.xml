@@ -50,11 +50,11 @@
 
     <select id="selectUserByUserInfo" parameterType="user" resultType="user">
 #         select * from user
-        <bind name="u_name" value="'%' + u_name + '%'"/>
+<!--        <bind name="u_name" value="'%' + u_name + '%'"/>-->
         <include refid="sql1"/>
         where 1=1
             <if test="u_name != null and u_name != ''">
-                u_name like concat('%', #{u_name}, '%')
+                and u_name like concat('%', #{u_name}, '%')
             </if>
             <if test=" u_sex!= null and u_sex != ''">
                 and u_sex = #{u_sex}
@@ -72,7 +72,7 @@
         </if>
 
         <choose>
-            <when test="U_name != null and u_name != ''">
+            <when test="u_name != null and u_name != ''">
                 and u_name like concat('%', #{u_name}, '%')
             </when>
             <when test=" u_sex!= null and u_sex != ''">
@@ -104,7 +104,7 @@
         <include refid="sql1"/>
         where
         <!--            <if test="u_name != null and u_name != ''">-->
-        u_name like concat('%', #{u_name}, '%')
+        u_name like #{u_name}
         <!--            </if>-->
         <!--            <if test=" u_sex!= null and u_sex != ''">-->
         and u_sex = #{u_sex}
@@ -119,7 +119,7 @@
         select * from user where u_id in 
             <foreach collection="ids" item="u_id" open="（" close=")" separator=",">
                 #{u_id}
-            </foreach> # 还原id数组
+            </foreach>
     </select>
 
     <insert id="insertUser2" >
